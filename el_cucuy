@@ -1,0 +1,57 @@
+задание 1: 
+class IterableWithGenerator:
+    def __iter__(self):
+        return self.generator()
+
+    def generator(self):
+        for i in range(5):  # Пример: возвращаем числа от 0 до 4
+            yield i
+
+obj = IterableWithGenerator()
+for value in obj:
+    print(value)
+
+
+задание 2: 
+
+def safe_calculator(func):
+    def wrapper(expression):
+        try:
+            result = func(expression)
+            return f"Результат: {result}"
+        except ZeroDivisionError:
+            return "Ошибка: деление на ноль."
+        except (SyntaxError, NameError):
+            return "Ошибка: некорректное выражение."
+        except Exception as e:
+            return f"Неизвестная ошибка: {e}"
+    return wrapper
+
+@safe_calculator
+def calculate(expression):
+    return eval(expression)
+
+print(calculate("10 / 2"))  
+print(calculate("10 / 0"))  
+print(calculate("10 + x"))  
+
+доп:
+
+class StudentSimulator:
+    def __init__(self, days):
+        self.days = days
+        self.current_day = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current_day < self.days:
+            self.current_day += 1
+            return f"День {self.current_day}: студент учится, отдыхает и делает домашку."
+        else:
+            raise StopIteration
+
+student = StudentSimulator(3)
+for day in student:
+    print(day)
