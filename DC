@@ -1,0 +1,53 @@
+задание 1:
+
+import logging
+
+logging.basicConfig(
+    filename='simulation.log', 
+    level=logging.INFO, 
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+class Sims:
+    def __init__(self, name, days):
+        self.name = name
+        self.days = days
+        self.current_day = 0
+        logging.info(f"Создан симулятор для {name} на {days} дней.")
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current_day < self.days:
+            self.current_day += 1
+            day_result = f"День {self.current_day}: {self.name} учится, отдыхает и делает домашку."
+            logging.info(day_result)
+            return day_result
+        else:
+            logging.info(f"Симуляция для {self.name} завершена.")
+            raise StopIteration
+
+student = Sims("Иван", 3)
+for day in student:
+    print(day)
+
+доп: 
+
+def error_logging(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            logging.error(f"Ошибка в функции '{func.__name__}': {e}")
+            raise
+    return wrapper
+
+@error_logging
+def risky_function(x):
+    return 10 / x  # Деление на 0 вызовет ошибку
+
+try:
+    print(risky_function(0))
+except ZeroDivisionError:
+    print("Поймана ошибка деления на 0.")
