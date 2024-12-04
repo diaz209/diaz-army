@@ -1,0 +1,26 @@
+pip install colorama
+
+import colorama
+
+# Выводим все атрибуты модуля
+print(dir(colorama))
+
+colorama.init()
+print("Инициализация завершена.")
+
+from colorama import Fore
+print(Fore.RED + "Красный текст")
+print(Fore.GREEN + "Зеленый текст")
+print(Fore.RESET + "Сброс цвета")
+
+from colorama import Back
+print(Back.YELLOW + "Текст с желтым фоном")
+print(Back.RESET + "Сброс фона")
+
+from colorama import Style
+print(Style.BRIGHT + "Яркий текст")
+print(Style.DIM + "Приглушенный текст")
+print(Style.RESET_ALL + "Сброс стиля")
+
+colorama.deinit()
+
